@@ -48,76 +48,237 @@
                 
             <!-- Book Recommendation Popup Styles -->
             <style>
-                /* Default state - popup hidden - using transform centering */
+                /* Default state - popup hidden */
                 .popup.lightbox[data-popup-id="book"] {
                     display: none !important;
                     position: fixed !important;
-                    top: 50% !important;
-                    left: 50% !important;
-                    transform: translate(-50%, -50%) !important;
-                    width: auto !important;
-                    height: auto !important;
-                    max-width: 90vw !important;
-                    max-height: 90vh !important;
-                    background: transparent !important;
-                    z-index: 99999 !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                }
-                
-                /* Add overlay background */
-                .popup.lightbox[data-popup-id="book"]:before {
-                    content: '' !important;
-                    position: fixed !important;
                     top: 0 !important;
                     left: 0 !important;
-                    right: 0 !important;
-                    bottom: 0 !important;
-                    background-color: rgba(0, 0, 0, 0.8) !important;
-                    z-index: -1 !important;
+                    width: 100vw !important;
+                    height: 100vh !important;
+                    background: white !important;
+                    z-index: 1000 !important;
+                    padding: 40px !important;
+                    margin: 0 !important;
+                    box-sizing: border-box !important;
+                    cursor: default !important;
                 }
                 
-                /* When shown programmatically - using transform centering */
+                /* When shown programmatically */
                 .popup.lightbox[data-popup-id="book"].book-popup-visible,
                 #bookPopupOverlay.book-popup-visible,
                 div[data-popup-id="book"].book-popup-visible {
-                    display: block !important;
-                    position: fixed !important;
-                    top: 50% !important;
-                    left: 50% !important;
-                    transform: translate(-50%, -50%) !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
                     visibility: visible !important;
                     opacity: 1 !important;
                     pointer-events: auto !important;
-                    z-index: 99999 !important;
+                    z-index: 1000 !important;
                 }
                 
                 /* Override any plugin interference */
                 .popup.lightbox[data-popup-id="book"].book-popup-visible.cmplz-hidden,
                 #bookPopupOverlay.book-popup-visible.cmplz-hidden {
-                    display: block !important;
-                    position: fixed !important;
-                    top: 50% !important;
-                    left: 50% !important;
-                    transform: translate(-50%, -50%) !important;
-                    z-index: 99999 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    z-index: 1000 !important;
                 }
                 
-                /* Popup content styling with better text containment */
+                /* Popup content styling - full area white */
                 .popup.lightbox[data-popup-id="book"] .content--scroll {
-                    background: white !important;
-                    border-radius: 15px !important;
-                    padding: 30px !important;
-                    max-width: 500px !important;
-                    width: calc(100vw - 40px) !important;
-                    max-height: 80vh !important;
+                    background: none !important;
+                    border-radius: 0 !important;
+                    padding: 0 !important;
+                    max-width: none !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                    max-height: none !important;
                     overflow-y: auto !important;
                     position: relative !important;
-                    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
-                    margin: auto !important;
+                    box-shadow: none !important;
+                    margin: 0 !important;
                     box-sizing: border-box !important;
                     word-wrap: break-word !important;
                     overflow-wrap: break-word !important;
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif !important;
+                }
+                
+                /* Modern Book Popup Close Button - positioned for full screen */
+                .popup.lightbox[data-popup-id="book"] .close.icon {
+                    position: absolute !important;
+                    top: 30px !important;
+                    right: 30px !important;
+                    width: 50px !important;
+                    height: 50px !important;
+                    background: #f0f0f0 !important;
+                    border: none !important;
+                    border-radius: 50% !important;
+                    cursor: pointer !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    color: #666 !important;
+                    font-size: 22px !important;
+                    transition: all 0.2s ease !important;
+                    z-index: 1001 !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .close.icon:before {
+                    content: '✕' !important;
+                    font-weight: normal !important;
+                    line-height: 1 !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .close.icon:hover {
+                    background: #e0e0e0 !important;
+                    color: #333 !important;
+                    transform: scale(1.1) !important;
+                }
+                
+                /* Hide the book recommendation title */
+                .popup.lightbox[data-popup-id="book"] h2 {
+                    display: none !important;
+                }
+                
+                /* New layout: Book details on left, description on right - centered on screen */
+                .popup.lightbox[data-popup-id="book"] .book-content {
+                    display: flex !important;
+                    gap: 60px !important;
+                    margin: 0 auto !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    width: 100% !important;
+                    height: 100% !important;
+                    max-width: 1200px !important;
+                    padding: 80px 40px !important;
+                    box-sizing: border-box !important;
+                }
+                
+                /* Left side: Book image, title, author */
+                .popup.lightbox[data-popup-id="book"] .book-left {
+                    flex: 0 0 300px !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    text-align: center !important;
+                }
+                
+                /* Right side: Description */
+                .popup.lightbox[data-popup-id="book"] .book-right {
+                    flex: 1 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-cover img {
+                    width: 160px !important;
+                    height: 240px !important;
+                    object-fit: cover !important;
+                    border-radius: 12px !important;
+                    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+                    margin-bottom: 20px !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-title {
+                    font-size: 24px !important;
+                    font-weight: 700 !important;
+                    color: #1a1a1a !important;
+                    margin: 0 0 10px 0 !important;
+                    line-height: 1.3 !important;
+                    letter-spacing: -0.01em !important;
+                    text-align: center !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-author {
+                    font-size: 18px !important;
+                    color: #666 !important;
+                    margin: 0 !important;
+                    font-weight: 500 !important;
+                    font-style: normal !important;
+                    text-align: center !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-description {
+                    border: none !important;
+                    padding: 0 !important;
+                    background: none !important;
+                    margin: 0 !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-description h3 {
+                    font-size: 20px !important;
+                    font-weight: 600 !important;
+                    color: #1a1a1a !important;
+                    margin: 0 0 20px 0 !important;
+                    letter-spacing: -0.01em !important;
+                    text-align: left !important;
+                }
+                
+                .popup.lightbox[data-popup-id="book"] .book-description p {
+                    font-size: 15px !important;
+                    line-height: 1.6 !important;
+                    color: #444 !important;
+                    margin: 0 !important;
+                    font-weight: 400 !important;
+                }
+                
+                /* Mobile responsive styles for full screen popup */
+                @media (max-width: 768px) {
+                    .popup.lightbox[data-popup-id="book"] {
+                        padding: 30px 20px !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .close.icon {
+                        top: 20px !important;
+                        right: 20px !important;
+                        width: 45px !important;
+                        height: 45px !important;
+                        font-size: 20px !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-content {
+                        flex-direction: column !important;
+                        gap: 40px !important;
+                        padding: 60px 0 40px 0 !important;
+                        align-items: center !important;
+                        justify-content: flex-start !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-left {
+                        flex: none !important;
+                        width: 100% !important;
+                        align-items: center !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-right {
+                        flex: none !important;
+                        width: 100% !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-cover img {
+                        width: 140px !important;
+                        height: 210px !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-title {
+                        font-size: 22px !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-author {
+                        font-size: 16px !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-description h3 {
+                        font-size: 18px !important;
+                        text-align: center !important;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-description p {
+                        text-align: center !important;
+                    }
+                }
                 }
                 
                 /* Close button positioning */
@@ -1453,22 +1614,23 @@ var complianz = {"prefix":"cmplz_","user_banner_id":"1","set_cookies":[],"block_
     <!-- Book Recommendation Popup -->
     <div class="popup lightbox" data-popup-id="book" data-lenis-prevent-wheel id="bookPopupOverlay">
         <button autofocus class="close icon" id="closeBookPopup"></button>
-        <h2 class="display--md uppercase fcolor--neutral900" data-animation='split'>
-            <div><div>📚 Book Recommendation</div></div>
-        </h2>
         <div class="content--scroll">
             <div class="book-content">
-                <div class="book-cover">
-                    <img id="bookCover" src="" alt="Book Cover">
+                <div class="book-left">
+                    <div class="book-cover">
+                        <img id="bookCover" src="" alt="Book Cover">
+                    </div>
+                    <div class="book-info">
+                        <h3 class="book-title" id="bookTitle"></h3>
+                        <p class="book-author" id="bookAuthor"></p>
+                    </div>
                 </div>
-                <div class="book-info">
-                    <h3 class="book-title" id="bookTitle"></h3>
-                    <p class="book-author" id="bookAuthor"></p>
+                <div class="book-right">
+                    <div class="book-description">
+                        <h3>Why you should read this book:</h3>
+                        <p id="bookRecommendation" class="loading-text">Loading recommendation...</p>
+                    </div>
                 </div>
-            </div>
-            <div class="book-description">
-                <h3>Why you should read this book:</h3>
-                <p id="bookRecommendation" class="loading-text">Fetching recommendation from AI...</p>
             </div>
         </div>
     </div>
@@ -1609,7 +1771,7 @@ var complianz = {"prefix":"cmplz_","user_banner_id":"1","set_cookies":[],"block_
                 // Reset recommendation text
                 const recommendationElement = document.getElementById('bookRecommendation');
                 if (recommendationElement) {
-                    recommendationElement.textContent = 'Fetching recommendation from AI...';
+                    recommendationElement.textContent = 'Loading recommendation...';
                     recommendationElement.className = 'loading-text';
                     
                     // Fetch recommendation
@@ -1676,7 +1838,7 @@ var complianz = {"prefix":"cmplz_","user_banner_id":"1","set_cookies":[],"block_
                 visibility: visible !important;
                 opacity: 1 !important;
                 pointer-events: auto !important;
-                z-index: 99999 !important;
+                z-index: 1000 !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 max-width: 90vw !important;
