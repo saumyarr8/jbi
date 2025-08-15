@@ -822,22 +822,36 @@
         background: #000;
         position: relative;
         -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+        overscroll-behavior-x: contain;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+    
+    .mobile-jbimap-section::-webkit-scrollbar {
+        display: none; /* Hide scrollbar for Chrome, Safari and Opera */
     }
     
     .mobile-jbimap-container {
         height: 100%;
         width: max-content;
+        min-width: 200vw; /* Ensure it's wider than viewport for scrolling */
         display: flex;
         align-items: center;
+        touch-action: pan-x; /* Only allow horizontal panning */
     }
     
     .jbimap-image {
-        height: 100%;
+        height: 90%;
         width: auto;
+        min-width: 150vw; /* Make image wider than viewport */
         object-fit: contain;
         user-select: none;
         -webkit-user-select: none;
         -moz-user-select: none;
+        pointer-events: auto;
+        touch-action: manipulation;
+    }
         display: block;
         min-width: 150vw; /* Make it wider than screen for horizontal scrolling */
     }
@@ -891,6 +905,56 @@
         <img src="jbimap.jpg" alt="JBI Interactive Map" class="jbimap-image" />
     </div>
 </section>
+
+<script>
+// Enhanced mobile touch scrolling for jbimap
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileSection = document.querySelector('.mobile-jbimap-section');
+    const jbimapImage = document.querySelector('.jbimap-image');
+    
+    if (mobileSection && jbimapImage) {
+        // Ensure image is loaded before setting up scrolling
+        jbimapImage.addEventListener('load', function() {
+            // Force minimum width for scrolling
+            const container = document.querySelector('.mobile-jbimap-container');
+            if (container) {
+                container.style.width = Math.max(window.innerWidth * 2, jbimapImage.naturalWidth) + 'px';
+            }
+        });
+        
+        // Add touch event listeners for better mobile experience
+        let isScrolling = false;
+        let startX = 0;
+        let scrollLeft = 0;
+        
+        mobileSection.addEventListener('touchstart', function(e) {
+            isScrolling = true;
+            startX = e.touches[0].pageX - mobileSection.offsetLeft;
+            scrollLeft = mobileSection.scrollLeft;
+        }, { passive: true });
+        
+        mobileSection.addEventListener('touchmove', function(e) {
+            if (!isScrolling) return;
+            const x = e.touches[0].pageX - mobileSection.offsetLeft;
+            const walk = (x - startX) * 2; // Adjust scroll speed
+            mobileSection.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
+        
+        mobileSection.addEventListener('touchend', function() {
+            isScrolling = false;
+        }, { passive: true });
+        
+        // Prevent default touch behavior on the image
+        jbimapImage.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+        });
+        
+        jbimapImage.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        });
+    }
+});
+</script>
 
 
 
