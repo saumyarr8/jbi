@@ -17,28 +17,28 @@
             <style>img:is([sizes="auto" i], [sizes^="auto," i]) { contain-intrinsic-size: 3000px 1500px }</style>
     
 <!-- Ottimizzazione per i motori di ricerca di Rank Math - https://rankmath.com/ -->
-<title>FRA! - Doodle Designer | Portfolio di Francesco Caporale</title>
-<meta name="description" content="Scopri il mondo di FRA!, doodle designer e illustratore con base a Milano. Portfolio creativo tra grafica, illustrazione, live painting e murales."/>
+<title>Just Books Indiranagar</title>
+<meta name="description" content="Scopri il mondo di Just Books, la tua libreria di fiducia a Indiranagar. Offriamo una vasta selezione di libri, eventi e attività per gli amanti della lettura."/>
 <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"/>
 <link rel="canonical" href="https://fradesign.it/" />
 <meta property="og:locale" content="it_IT" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="FRA! - Doodle Designer | Portfolio di Francesco Caporale" />
-<meta property="og:description" content="Scopri il mondo di FRA!, doodle designer e illustratore con base a Milano. Portfolio creativo tra grafica, illustrazione, live painting e murales." />
+<meta property="og:title" content="Just Books Indiranagar" />
+<meta property="og:description" content="Scopri il mondo di Just Books, la tua libreria di fiducia a Indiranagar. Offriamo una vasta selezione di libri, eventi e attività per gli amanti della lettura." />
 <meta property="og:url" content="https://fradesign.it/" />
-<meta property="og:site_name" content="FRA! Doodle Designer e Illustratore" />
+<meta property="og:site_name" content="Just Books Indiranagar" />
 <meta property="og:updated_time" content="2025-06-17T07:52:00+00:00" />
 <meta property="og:image" content="https://fradesign.it/wp-content/uploads/2025/06/COPERTINA-SITO.jpg" />
 <meta property="og:image:secure_url" content="https://fradesign.it/wp-content/uploads/2025/06/COPERTINA-SITO.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="doodle designer" />
+<meta property="og:image:alt" content="Just Books Indiranagar" />
 <meta property="og:image:type" content="image/jpeg" />
 <meta property="article:published_time" content="2025-05-14T06:14:04+00:00" />
 <meta property="article:modified_time" content="2025-06-17T07:52:00+00:00" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="FRA! - Doodle Designer | Portfolio di Francesco Caporale" />
-<meta name="twitter:description" content="Scopri il mondo di FRA!, doodle designer e illustratore con base a Milano. Portfolio creativo tra grafica, illustrazione, live painting e murales." />
+<meta name="twitter:title" content="Just Books Indiranagar" />
+<meta name="twitter:description" content="Scopri il mondo di Just Books, la tua libreria di fiducia a Indiranagar. Offriamo una vasta selezione di libri, eventi e attività per gli amanti della lettura." />
 <meta name="twitter:image" content="https://fradesign.it/wp-content/uploads/2025/06/COPERTINA-SITO.jpg" />
 <meta name="twitter:label1" content="Scritto da" />
 <meta name="twitter:data1" content="Patrick" />
@@ -133,20 +133,21 @@
                     z-index: 99999 !important;
                 }
                 
-                /* Popup content styling */
+                /* Popup content styling with better text containment */
                 .popup.lightbox[data-popup-id="book"] .content--scroll {
                     background: white !important;
                     border-radius: 15px !important;
                     padding: 30px !important;
                     max-width: 500px !important;
-                    width: 100% !important;
+                    width: calc(100vw - 40px) !important;
                     max-height: 80vh !important;
                     overflow-y: auto !important;
                     position: relative !important;
                     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
                     margin: auto !important;
-                    align-self: center !important;
-                    justify-self: center !important;
+                    box-sizing: border-box !important;
+                    word-wrap: break-word !important;
+                    overflow-wrap: break-word !important;
                 }
                 
                 /* Close button positioning */
@@ -177,12 +178,14 @@
                     background: #e0e0e0 !important;
                 }
                 
-                /* Book popup specific styles */
+                /* Book popup specific styles with overflow prevention */
                 .popup.lightbox[data-popup-id="book"] .book-content {
                     display: flex;
                     gap: 20px;
                     margin-bottom: 20px;
                     align-items: flex-start;
+                    width: 100%;
+                    box-sizing: border-box;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-cover img {
@@ -191,10 +194,14 @@
                     object-fit: cover;
                     border-radius: 8px;
                     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                    flex-shrink: 0;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-info {
                     flex: 1;
+                    min-width: 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-title {
@@ -202,6 +209,8 @@
                     font-size: 20px;
                     font-weight: bold;
                     margin: 0 0 10px 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-author {
@@ -209,6 +218,8 @@
                     font-size: 16px;
                     margin: 0 0 15px 0;
                     font-style: italic;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-description {
@@ -216,12 +227,18 @@
                     padding: 15px;
                     border-radius: 10px;
                     border-left: 4px solid #1D1D1B;
+                    width: 100%;
+                    box-sizing: border-box;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-description h3 {
                     color: #1D1D1B;
                     font-size: 16px;
                     margin: 0 0 10px 0;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .book-description p {
@@ -229,6 +246,9 @@
                     line-height: 1.6;
                     margin: 0;
                     font-size: 14px;
+                    word-wrap: break-word;
+                    overflow-wrap: break-word;
+                    hyphens: auto;
                 }
                 
                 .popup.lightbox[data-popup-id="book"] .loading-text {
@@ -242,10 +262,17 @@
                     50% { opacity: 1; }
                 }
                 
-                @media (max-width: 480px) {
+                @media (max-width: 600px) {
+                    .popup.lightbox[data-popup-id="book"] .content--scroll {
+                        width: calc(100vw - 20px) !important;
+                        padding: 20px !important;
+                        max-width: none !important;
+                    }
+                    
                     .popup.lightbox[data-popup-id="book"] .book-content {
                         flex-direction: column;
                         align-items: center;
+                        gap: 15px;
                     }
                     
                     .popup.lightbox[data-popup-id="book"] .book-cover img {
@@ -253,9 +280,43 @@
                         height: 150px;
                     }
                     
-                    .popup.lightbox[data-popup-id="book"] .content--scroll {
-                        padding: 20px !important;
-                        margin: 10px !important;
+                    .popup.lightbox[data-popup-id="book"] .book-title {
+                        font-size: 18px;
+                        text-align: center;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-author {
+                        text-align: center;
+                        font-size: 14px;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-description {
+                        margin-top: 15px;
+                    }
+                    
+                    .popup.lightbox[data-popup-id="book"] .book-description p {
+                        font-size: 13px;
+                    }
+                }
+                
+                /* Fix heading text overflow - scale to 80% of original and shift up */
+                .sectiontitle-element--center h1.display--xl.home {
+                    transform: scale(0.8) translateY(-10%) !important;
+                    transform-origin: center !important;
+                    word-wrap: break-word !important;
+                    overflow-wrap: break-word !important;
+                    max-width: 100% !important;
+                }
+                
+                @media (max-width: 768px) {
+                    .sectiontitle-element--center h1.display--xl.home {
+                        transform: scale(0.75) translateY(-10%) !important;
+                    }
+                }
+                
+                @media (max-width: 480px) {
+                    .sectiontitle-element--center h1.display--xl.home {
+                        transform: scale(0.7) translateY(-10%) !important;
                     }
                 }
             </style>
@@ -393,18 +454,6 @@
     </div>
     <div class="layer-4">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 306 161" fill="none"><path fill="#fff" d="M278.989 86.032c-7.409-2.37-15.1-2.517-23.518-.474-6.399 1.555-8.137 1.318-12.234-.296l-2.064-.8-.564-1.658c-3.534-10.351-10.067-17.548-20.578-22.628-4.603-2.236-11.774-4.605-17.164-5.375-1.247-6.383-6.057-19.992-8.789-24.509-3.92-6.5-10.572-14.186-15.471-17.859C165.616 2.69 146.745-1.902 130.532.734c-15.619 2.547-26.755 7.775-37.207 17.49-4.885 4.546-14.12 16.496-17.653 22.85-3.386 6.1-8.018 19.458-8.968 25.826-4.053.044-6.43.592-10.512 2.31-7.825 3.302-13.986 8.381-17.475 14.408-5.256.43-15.59 3.096-19.598 5.42-7.528 4.384-14.58 13.906-17.966 24.272-1.974 6.071-1.38 13.846 1.53 19.784 3.37 6.842 10.244 13.299 18.885 17.667 7.84 3.984 22.019 4.724 32.263 1.688 15.115-4.457 34.015-5.153 47.036-1.717 2.049.533 6.37 2.132 9.235 3.42 6.34 2.814 12.397 4.961 17.074 6.027 2.153.504 5.316.741 8.552.741 3.816 0 7.721-.341 10.2-.978 2.88-.755 10.794-4.353 15.397-6.589 12.397-6.013 14.208-6.575 19.895-7.286 4.662-.578 9.309-.074 13.852 1.481 9.903 3.406 14.209 4.146 21.945 3.746 3.86-.192 11.15-1.066 16.257-1.94 7.81-1.333 8.819-1.392 17.832-1.007 5.686.252 14.921.459 20.593.459h11.551l5.315-2.621c2.48-1.214 5.998-3.465 7.958-5.42 8.582-8.559 12.041-25.071 7.26-34.652-4.261-8.53-14.461-16.793-24.794-20.08Z"/><path fill="#fff" d="M88.692 90.919c1.322-.681 2.138-.385 5.716 2.059 8.107 5.553 22.242 5.982 26.918.829.847-.919.936-1.6.52-3.703-.653-3.228-.386-5.034.802-5.493 1.247-.49 2.301.459 4.721 4.25 1.603 2.502 2.732 3.48 5.464 4.783 2.346 1.11 3.489 2.029 3.608 2.873.401 2.813-3.519 3.598-7.661 1.555-2.272-1.126-2.346-1.126-3.341-.015-.564.607-2.717 1.955-4.796 2.961-3.266 1.615-4.513 1.881-9.294 2.029-3.029.089-6.177.045-7.008-.118-3.281-.622-9.383-2.769-11.73-4.132-4.409-2.547-6.428-6.604-3.919-7.878Zm-62.076 46.159c6.414 3.406 14.64 3.894 23.74 1.392 13.438-3.688 24.038-4.872 37.594-4.191 10.972.548 17.445 2.103 27.942 6.738 12.234 5.405 18.915 6.708 26.042 5.094 1.47-.341 7.246-2.858 12.828-5.598 11.566-5.686 17.297-7.759 23.963-8.707 7.038-.992 13.215-.311 22.063 2.458 4.217 1.318 8.626 2.547 9.814 2.74 2.569.414 12.442-.593 22.316-2.266 6.354-1.081 8.462-1.17 18.781-.77 6.399.252 15.397.489 19.985.518 8.284.06 8.388.045 11.64-1.777 2.88-1.614 3.563-2.384 5.582-6.308 3.148-6.116 3.623-11.122 1.396-14.927-2.91-4.932-9.443-9.789-15.842-11.759-4.855-1.495-9.814-1.48-16.198.06-6.711 1.629-13.036 1.643-17.297.059-14.996-5.583-14.699-5.553-20.014-2.725-4.959 2.621-6.117.34-1.916-3.761 1.396-1.363 3.831-3.05 5.405-3.732 3.237-1.437 3.251-1.659.534-6.709-3.236-6.027-11.521-11.165-21.424-13.268-4.276-.903-5.449-.948-9.116-.296-5.865 1.051-10.438 3.524-16.214 8.766-7.007 6.353-7.304 6.516-9.145 5.317-3.311-2.162-1.084-7.493 5.716-13.639 3.593-3.243 11.135-7.538 13.258-7.538.52 0 1.099-.236 1.278-.547.875-1.407-4.767-19.163-7.632-24.035-2.999-5.109-8.656-11.595-12.501-14.335-5.004-3.554-8.909-5.301-16.214-7.241-5.538-1.466-6.592-1.555-14.624-1.274-9.784.355-14.713 1.451-21.81 4.813-5.375 2.547-8.582 4.694-13.125 8.84-3.89 3.525-13.244 15.713-15.53 20.2-1.307 2.562-4.915 11.728-5.212 13.21-.06.295 1.812.473 4.172.414 3.356-.089 4.825.163 6.86 1.17 4.78 2.399 8.091 6.5 7.408 9.196-.683 2.74-4.068 2.236-5.924-.889-1.53-2.591-5.508-4.264-9.012-3.776-4.603.622-5.538 1.91-6.25 8.47-.817 7.627-2.57 9.434-6.31 6.502-2.644-2.073-7.261-2.177-12.19-.252-4.781 1.88-8.374 5.08-11.403 10.173-2.464 4.147-3.89 5.05-8.121 5.05-5.657.015-13.496 2.222-17.119 4.813-5.998 4.295-11.195 14.602-10.26 20.377.817 5.183 5.316 10.351 12.086 13.95Z"/><path fill="#000" d="M92.612 98.797c2.346 1.363 8.448 3.51 11.73 4.132.831.163 3.979.207 7.008.118 4.781-.148 6.028-.414 9.294-2.028 2.079-1.007 4.232-2.355 4.796-2.962.995-1.11 1.069-1.11 3.34.015 4.143 2.043 8.062 1.259 7.661-1.555-.118-.844-1.262-1.762-3.607-2.873-2.732-1.303-3.861-2.28-5.464-4.783-2.42-3.791-3.475-4.739-4.722-4.25-1.187.459-1.455 2.265-.802 5.494.416 2.102.327 2.784-.519 3.702-4.677 5.153-18.811 4.724-26.918-.83-3.578-2.443-4.395-2.739-5.716-2.058-2.51 1.274-.49 5.331 3.92 7.878Z"/><path fill="#000" d="M24.79 102.752c3.623-2.592 11.463-4.798 17.12-4.813 4.231 0 5.656-.904 8.121-5.05 3.029-5.094 6.622-8.293 11.403-10.174 4.929-1.925 9.546-1.821 12.189.252 3.742 2.932 5.493 1.126 6.31-6.5.713-6.561 1.648-7.85 6.25-8.471 3.505-.49 7.484 1.184 9.013 3.776 1.856 3.124 5.241 3.628 5.924.888.683-2.695-2.628-6.797-7.409-9.196-2.034-1.007-3.504-1.259-6.859-1.17-2.36.06-4.231-.118-4.172-.414.297-1.481 3.905-10.648 5.211-13.21 2.287-4.487 11.64-16.675 15.53-20.199 4.544-4.146 7.751-6.294 13.125-8.84 7.097-3.362 12.027-4.458 21.811-4.813 8.032-.282 9.086-.193 14.624 1.273 7.305 1.94 11.21 3.687 16.213 7.241 3.846 2.74 9.503 9.226 12.502 14.335 2.865 4.872 8.507 22.628 7.631 24.035-.178.31-.757.548-1.277.548-2.123 0-9.665 4.294-13.258 7.537-6.8 6.146-9.027 11.477-5.716 13.64 1.841 1.199 2.137 1.036 9.145-5.317 5.776-5.242 10.349-7.716 16.214-8.767 3.667-.652 4.84-.607 9.116.296 9.903 2.103 18.187 7.242 21.424 13.269 2.717 5.05 2.702 5.272-.534 6.708-1.574.681-4.009 2.37-5.405 3.732-4.202 4.102-3.043 6.382 1.915 3.761 5.316-2.828 5.019-2.858 20.014 2.725 4.262 1.585 10.587 1.57 17.298-.06 6.384-1.54 11.343-1.554 16.198-.058 6.399 1.969 12.931 6.827 15.842 11.758 2.227 3.806 1.752 8.811-1.396 14.927-2.019 3.924-2.702 4.694-5.583 6.308-3.251 1.822-3.355 1.837-11.64 1.778-4.587-.03-13.585-.267-19.984-.519-10.319-.4-12.427-.311-18.782.77-9.873 1.674-19.746 2.681-22.315 2.266-1.188-.192-5.597-1.422-9.814-2.74-8.849-2.769-15.025-3.45-22.063-2.458-6.666.948-12.397 3.021-23.963 8.708-5.583 2.739-11.358 5.257-12.828 5.597-7.127 1.615-13.808.311-26.042-5.094-10.497-4.635-16.97-6.19-27.942-6.738-13.556-.681-24.157.504-37.593 4.191-9.102 2.503-17.327 2.014-23.741-1.392-6.77-3.598-11.27-8.767-12.086-13.95-.935-5.775 4.262-16.082 10.26-20.376Zm-.534 42.737c6.533 3.303 19.108 3.88 27.898 1.289 16.273-4.813 36.079-5.509 50.243-1.777 2.361.622 6.919 2.31 10.14 3.732 5.939 2.65 11.685 4.694 15.976 5.671 3.756.874 12.249.755 15.931-.192 1.841-.489 8.27-3.273 14.283-6.19 12.546-6.087 15.07-6.99 21.751-7.834 5.553-.681 11.136-.089 16.525 1.762 9.25 3.169 12.739 3.791 19.702 3.436 3.668-.193 10.675-1.022 15.56-1.866 8.226-1.407 9.695-1.496 19.093-1.081 5.613.237 14.759.444 20.341.444h10.156l4.097-2.014c2.242-1.096 5.108-3.036 6.37-4.294 6.77-6.738 9.799-20.51 6.146-27.811-3.533-7.079-12.53-14.305-21.275-17.09-6.385-2.043-12.947-2.147-20.311-.355-7.231 1.763-10.245 1.659-15.827-.548l-4.618-1.806-1.44-4.25c-3.014-8.812-8.507-14.839-17.549-19.207-5.509-2.666-13.823-5.035-17.713-5.035h-2.153l-.356-3.436c-.475-4.502-5.672-19.459-8.226-23.694-3.533-5.85-9.65-12.943-13.956-16.171-11.789-8.84-28.833-12.987-43.547-10.588-14.535 2.37-24.498 7.034-34.119 15.978-4.41 4.102-13.302 15.624-16.51 21.384-3.088 5.553-7.557 18.467-8.314 24.02l-.668 4.842h-4.499c-3.682.015-5.3.341-8.878 1.851-7.008 2.962-12.487 7.612-15.174 12.884-.802 1.555-1.262 1.807-3.801 1.955-4.588.281-14.387 2.902-17.416 4.664-6.28 3.658-12.397 12.025-15.307 20.97-1.515 4.62-1.025 10.795 1.217 15.356 2.806 5.716 8.73 11.196 16.228 15.001Z"/><path fill="#000" d="M139.797 82.508c-1.514.681-3.608.444-4.632-.504-2.792-2.591-3.148-7.833-1.055-15.03 1.545-5.258 2.747-7.316 4.277-7.316.95 0 1.9 1.792 3.34 6.235 2.999 9.255 2.361 14.69-1.93 16.615Z"/></svg>
-    </div>
-    <div class="layer-btn" data-video>
-        <picture>
-            <source type="image/avif" data-srcset="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel.avif 1x, https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel@2x.avif 2x">
-            <source type="image/png" data-srcset="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel.png 1x, https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel@2x.png 2x">
-            <img data-src="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel.png" draggable="false" class="lazyload move" alt="" />
-        </picture>
-        <picture>
-            <source type="image/avif" data-srcset="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel-face.avif 1x, https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel-face@2x.avif 2x">
-            <source type="image/png" data-srcset="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel-face.png 1x, https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel-face@2x.png 2x">
-            <img data-src="https://fradesign.it/wp-content/themes/fra-portfolio/dist/images/home/btn-showreel-face.png" draggable="false" class="lazyload mark" alt="" />
-        </picture>
     </div>
     <div class="container">
         <div class="row">
