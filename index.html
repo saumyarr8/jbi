@@ -549,8 +549,8 @@
                         </ul>
                         <div class="social">
                             <ul>
-                                <li class="text--xl ff--par uppercase"><a href="https://www.instagram.com/jbi.blr/" class="simple--line display--xs ff--par uppercase" target="_blank">Instagram</a></li>
-                            </div>
+                                <li class="text--xl ff--par uppercase"><a href="https://www.instagram.com/fradesign.it/" class="simple--line display--xs ff--par uppercase" target="_blank">Instagram</a></li><li class="text--xl ff--par uppercase"><a href="https://www.facebook.com/FRADESIGN.IT/" class="simple--line display--xs ff--par uppercase" target="_blank">Facebook</a></li><li class="text--xl ff--par uppercase"><a href="https://www.tiktok.com/@fradesign" class="simple--line display--xs ff--par uppercase" target="_blank">Tik Tok</a></li><li class="text--xl ff--par uppercase"><a href="https://www.linkedin.com/in/fradesign/" class="simple--line display--xs ff--par uppercase" target="_blank">LinkedIn</a></li>                            </ul>
+                        </div>
                     </div>
                     <div class="footer">
                         <div class="copy">
@@ -817,47 +817,85 @@
         display: block !important;
         width: 100vw;
         height: 90vh;
-        overflow-x: auto;
+        overflow-x: scroll;
         overflow-y: hidden;
         background: #000;
         position: relative;
         -webkit-overflow-scrolling: touch;
         scroll-behavior: smooth;
-        overscroll-behavior-x: contain;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE and Edge */
+        /* Enable touch scrolling */
+        touch-action: pan-x;
+        -ms-touch-action: pan-x;
+        scrollbar-width: none; /* Hide scrollbar for cleaner look */
+        -ms-overflow-style: none; /* Hide scrollbar for IE */
     }
     
+    /* Hide scrollbar for webkit browsers */
     .mobile-jbimap-section::-webkit-scrollbar {
-        display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+        display: none;
     }
     
     .mobile-jbimap-container {
         height: 100%;
-        width: max-content;
-        min-width: 200vw; /* Ensure it's wider than viewport for scrolling */
-        display: flex;
-        align-items: center;
-        touch-action: pan-x; /* Only allow horizontal panning */
+        width: auto; /* Let the image determine the width */
+        display: inline-block;
+        white-space: nowrap;
     }
     
     .jbimap-image {
-        height: 90%;
-        width: auto;
-        min-width: 150vw; /* Make image wider than viewport */
-        object-fit: contain;
+        height: 100%; /* Use full height of container */
+        width: auto; /* Let width be determined by aspect ratio */
+        object-fit: contain; /* Show full image without cropping */
         user-select: none;
         -webkit-user-select: none;
         -moz-user-select: none;
-        pointer-events: auto;
-        touch-action: manipulation;
-    }
         display: block;
-        min-width: 150vw; /* Make it wider than screen for horizontal scrolling */
+        touch-action: pan-x;
+        -webkit-touch-callout: none;
+        /* The image will naturally be wider than viewport for landscape images */
     }
     
     .jbimap-close-btn {
         display: none; /* Hide close button since it's not a modal */
+    }
+    
+    /* Scroll hint styling */
+    .scroll-hint {
+        animation: fadeInOut 4s infinite;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: rgba(0,0,0,0.8);
+        padding: 12px 24px;
+        border-radius: 25px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    @keyframes fadeInOut {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 1; }
+    }
+    
+    /* Loading indicator */
+    .loading-indicator {
+        transition: opacity 0.3s ease;
+    }
+    
+    .jbimap-image.loaded + .loading-indicator {
+        opacity: 0;
+        pointer-events: none;
+    }
+    
+    /* Hide scrollbar completely for cleaner mobile experience */
+    .mobile-jbimap-section {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .mobile-jbimap-section::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
     }
     
     /* Hide the original section on mobile */
@@ -902,59 +940,16 @@
 
 <section class="mobile-jbimap-section">
     <div class="mobile-jbimap-container">
-        <img src="jbimap.jpg" alt="JBI Interactive Map" class="jbimap-image" />
+        <img src="jbimap.jpg" alt="JBI Interactive Map" class="jbimap-image" draggable="false" loading="eager" />
+    </div>
+    <div class="scroll-hint" style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); color: white; font-size: 16px; opacity: 0.9; pointer-events: none; z-index: 10; background: rgba(0,0,0,0.7); padding: 12px 24px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.3); font-weight: 500;">
+        👆 Swipe left and right to explore 👆
+    </div>
+    <!-- Loading indicator -->
+    <div class="loading-indicator" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: white; font-size: 18px; opacity: 0.8; pointer-events: none; z-index: 5;">
+        Loading map...
     </div>
 </section>
-
-<script>
-// Enhanced mobile touch scrolling for jbimap
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileSection = document.querySelector('.mobile-jbimap-section');
-    const jbimapImage = document.querySelector('.jbimap-image');
-    
-    if (mobileSection && jbimapImage) {
-        // Ensure image is loaded before setting up scrolling
-        jbimapImage.addEventListener('load', function() {
-            // Force minimum width for scrolling
-            const container = document.querySelector('.mobile-jbimap-container');
-            if (container) {
-                container.style.width = Math.max(window.innerWidth * 2, jbimapImage.naturalWidth) + 'px';
-            }
-        });
-        
-        // Add touch event listeners for better mobile experience
-        let isScrolling = false;
-        let startX = 0;
-        let scrollLeft = 0;
-        
-        mobileSection.addEventListener('touchstart', function(e) {
-            isScrolling = true;
-            startX = e.touches[0].pageX - mobileSection.offsetLeft;
-            scrollLeft = mobileSection.scrollLeft;
-        }, { passive: true });
-        
-        mobileSection.addEventListener('touchmove', function(e) {
-            if (!isScrolling) return;
-            const x = e.touches[0].pageX - mobileSection.offsetLeft;
-            const walk = (x - startX) * 2; // Adjust scroll speed
-            mobileSection.scrollLeft = scrollLeft - walk;
-        }, { passive: true });
-        
-        mobileSection.addEventListener('touchend', function() {
-            isScrolling = false;
-        }, { passive: true });
-        
-        // Prevent default touch behavior on the image
-        jbimapImage.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-        });
-        
-        jbimapImage.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        });
-    }
-});
-</script>
 
 
 
@@ -2121,6 +2116,120 @@ var complianz = {"prefix":"cmplz_","user_banner_id":"1","set_cookies":[],"block_
                     closeBookPopup();
                 }
             });
+        });
+    </script>
+    
+    <!-- Mobile JBI Map Scrolling Enhancement Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileSection = document.querySelector('.mobile-jbimap-section');
+            const scrollHint = document.querySelector('.scroll-hint');
+            const jbimapImage = document.querySelector('.jbimap-image');
+            const loadingIndicator = document.querySelector('.loading-indicator');
+            
+            if (mobileSection && window.innerWidth <= 768) {
+                console.log('Setting up mobile jbimap scrolling...');
+                
+                // Wait for image to load to get proper dimensions
+                if (jbimapImage) {
+                    jbimapImage.onload = function() {
+                        console.log('Image loaded');
+                        
+                        // Hide loading indicator
+                        if (loadingIndicator) {
+                            loadingIndicator.style.opacity = '0';
+                            setTimeout(() => loadingIndicator.style.display = 'none', 300);
+                        }
+                        
+                        this.classList.add('loaded');
+                        
+                        console.log('Image natural width:', this.naturalWidth);
+                        console.log('Image natural height:', this.naturalHeight);
+                        console.log('Container width:', mobileSection.clientWidth);
+                        
+                        // Calculate proper image dimensions for landscape image
+                        const aspectRatio = this.naturalWidth / this.naturalHeight;
+                        const containerHeight = mobileSection.clientHeight * 0.9; // 90% of container height
+                        const imageWidth = containerHeight * aspectRatio;
+                        
+                        console.log('Calculated aspect ratio:', aspectRatio);
+                        console.log('Container height:', containerHeight);
+                        console.log('Calculated image width:', imageWidth);
+                        console.log('Viewport width:', window.innerWidth);
+                        
+                        // Force proper dimensions for scrolling
+                        this.style.height = containerHeight + 'px';
+                        this.style.width = imageWidth + 'px';
+                        
+                        // Update container width to match image
+                        const container = this.parentElement;
+                        container.style.width = imageWidth + 'px';
+                        
+                        console.log('Final image dimensions - Width:', this.style.width, 'Height:', this.style.height);
+                        console.log('Container scroll width after update:', mobileSection.scrollWidth);
+                        
+                        // Check if scrolling is now available
+                        setTimeout(() => {
+                            if (mobileSection.scrollWidth > mobileSection.clientWidth) {
+                                console.log('✅ Horizontal scrolling is now available');
+                                console.log('Scroll width:', mobileSection.scrollWidth, 'Client width:', mobileSection.clientWidth);
+                            } else {
+                                console.log('❌ Still no horizontal scrolling available');
+                            }
+                        }, 100);
+                    };
+                    
+                    // If image is already loaded
+                    if (jbimapImage.complete) {
+                        jbimapImage.onload();
+                    }
+                }
+                
+                // Hide scroll hint after first scroll
+                let hasScrolled = false;
+                mobileSection.addEventListener('scroll', function() {
+                    if (!hasScrolled && scrollHint) {
+                        hasScrolled = true;
+                        scrollHint.style.opacity = '0';
+                        scrollHint.style.transition = 'opacity 0.5s ease';
+                        
+                        setTimeout(() => {
+                            scrollHint.style.display = 'none';
+                        }, 500);
+                    }
+                    console.log('Scrolling detected, scrollLeft:', this.scrollLeft);
+                });
+                
+                // Add proper touch handling for smooth scrolling
+                let startX = 0;
+                let scrollStart = 0;
+                let isDragging = false;
+                
+                mobileSection.addEventListener('touchstart', function(e) {
+                    startX = e.touches[0].clientX;
+                    scrollStart = this.scrollLeft;
+                    isDragging = true;
+                    this.style.scrollBehavior = 'auto';
+                    console.log('Touch start at:', startX, 'Scroll position:', scrollStart);
+                });
+                
+                mobileSection.addEventListener('touchmove', function(e) {
+                    if (!isDragging) return;
+                    e.preventDefault();
+                    const touchX = e.touches[0].clientX;
+                    const diff = startX - touchX;
+                    this.scrollLeft = scrollStart + diff;
+                    console.log('Touch move, new scroll position:', this.scrollLeft);
+                });
+                
+                mobileSection.addEventListener('touchend', function(e) {
+                    isDragging = false;
+                    this.style.scrollBehavior = 'smooth';
+                    console.log('Touch end, final scroll position:', this.scrollLeft);
+                });
+                
+                console.log('Mobile jbimap touch handlers setup completed');
+            }
         });
     </script>
     
